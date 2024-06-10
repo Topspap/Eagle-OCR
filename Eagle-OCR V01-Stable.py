@@ -136,7 +136,7 @@ def main():
                     update_item_annotation(item['id'], annotation)
                     print('Extracted text for item', item['id'])
                 else:
-                    print('ID:',item['id'],'Name:',item['name'], 'Has no Text')
+                    print('ID:',item['id'],'Has no Text')
 
             except (FileNotFoundError, SyntaxError) as e:
                 print(f'Error processing file: {thumbnail_path} ({e})')
