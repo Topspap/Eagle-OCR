@@ -15,6 +15,8 @@ then if the photo has text detected the result will be pasted into the photo not
 
 or if the photo has no text detected nothing will happen
 
+**Aslo note:** if the photo already has note (annotation) more than 3 charecters it will be ignored and not tag will be added to it
+
 # Installation:
 1. Download the code "Eagle-OCR V01-Stable.py" with "requirements.txt"
 2. Install the requirements from "requirements.txt"
