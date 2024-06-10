@@ -13,9 +13,12 @@ then upload the photos to google-cloud-vision to analysie and extrct text
 
 then if the photo has text detected the result will be pasted into the photo note "annotation" && the photo will be tagged with "Auto_OCR"
 
-or if the photo has no text detected nothing will happen
+or if the photo has no text detected it will be tagged with "No_OCR"
 
-**Aslo note:** if the photo already has note (annotation) more than 3 charecters it will be ignored and not tag will be added to it
+**Aslo note:** 
+photos that already has note (annotation) more than 3 charecters it will be ignored and no tag will be added to it
+
+photos that has any of the following tags will be ignore from the process: "Auto_OCR", "No_OCR", "Broken_OCR"
 
 you can keep the photo in their original folder but also add them to "OCR_Process" folder to be processed, after process is done you can just remove them from "OCR_Process" folder.
 
