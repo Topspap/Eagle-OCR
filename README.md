@@ -2,7 +2,7 @@
 A Python code that upload photos from Eagle app to Google Cloud Vision API to perform OCR and then return the result to Eagle photo note.
 The code is tested on Windows 10, Eagle-4.0-beta20, Python 3.12
 
-**How the Script work:**
+# How the Script work:
 
 the script will access your Eagle opened library and look for a folder named "OCR_Process" Only (it will process only the photos inside this folder)
 
@@ -12,7 +12,7 @@ then if the photo has text detected the result will be pasted into the photo not
 
 or if the photo has no text detected nothing will happen
 
-**Installation:**
+# Installation:
 1. Download the code "Eagle-OCR V01-Stable.py" with "requirements.txt"
 2. Install the requirements from "requirements.txt"
 
