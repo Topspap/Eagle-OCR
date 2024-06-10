@@ -56,12 +56,15 @@ def get_items_with_no_annotation(max_iterations=None, folderID=None):
             print(f'Max iterations reached: {max_iterations}')
             break
 
-        for item in items: # Exclude photos that already has note more than 3 charecters.
-            if item['ext'] in ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'webp', "avif", "pdf"] and len(item['annotation']) < 3:
+        for item in items:  # you can add "and not item['annotation']" to exclude photo with note
+            # Exclude photos that not in following extenstion 'jpg', 'jpeg', 'png', 'bmp', 'gif', 'webp', 'avif', 'pdf' &
+            # already has note more than 3 charecters & has one of the follwoing tags: 'Auto_OCR', 'No_OCR', 'Broken_OCR'
+            undesired_tags = {'Auto_OCR', 'No_OCR', 'Broken_OCR'}
+            if item['ext'] in ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'webp', 'avif', 'pdf'] and len(item['annotation']) < 3 and all(tag not in item['tags'] for tag in undesired_tags):
                 items_with_no_annotation.append(item)
 
         offset += 1
-        print(f'Iteration {offset} completed. Total items with few tags: {len(items_with_no_annotation)}')
+        print(f'Iteration {offset} completed. Total items to process: {len(items_with_no_annotation)}')
 
     return items_with_no_annotation
 
@@ -76,12 +79,12 @@ def get_thumbnail_path(item_id):
         return None
 
 
-def update_item_annotation(item_id, new_annotation):
+def update_item_annotation(item_id, new_annotation=None, new_tags=None):
     response = requests.get(f'{BASE_API_URL}/api/item/info?id={item_id}')
     data = response.json()
     if response.status_code == 200 and 'data' in data and data['data']:
         existing_tags = data["data"]['tags']
-        all_tags = list(set(existing_tags + ['Auto_OCR'])) # Add 'Auto_OCR' tag to proccesed images that has text.
+        all_tags = list(set(existing_tags + new_tags))
         
         data = {
             'id': item_id,
@@ -133,15 +136,15 @@ def main():
             try:
                 annotation = extract_text(thumbnail_path)
                 if annotation: # Run if Photo has Text
-                    update_item_annotation(item['id'], annotation)
+                    update_item_annotation(item['id'], new_annotation=annotation, new_tags=['Auto_OCR'])
                     print('Extracted text for item', item['id'])
                 else:
-                    print('ID:',item['id'],'Has no Text')
+                    update_item_annotation(item['id'], new_tags=['No_OCR']) # Add 'No_OCR' tag to photo that has no text
+                    print('ID:',item['id'], 'Has no Text')
 
             except (FileNotFoundError, SyntaxError) as e:
                 print(f'Error processing file: {thumbnail_path} ({e})')
-                tags = ['Broken_OCR']  # Add 'Broken_OCR' tag for corrupted images
-                update_item_annotation(item['id'], tags)
+                update_item_annotation(item['id'], new_tags=['Broken_OCR']) # Add 'Broken_OCR' tag for corrupted images
                 print(f'Tagged item {item["id"]} as "Broken_OCR"')
                 continue
 
