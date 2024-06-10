@@ -57,7 +57,7 @@ def get_items_with_no_annotation(max_iterations=None, folderID=None):
             break
 
         for item in items: # Exclude photos that already has note more than 3 charecters.
-            if item['ext'] in ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'webp', "avif"] and len(item['annotation']) < 3:
+            if item['ext'] in ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'webp', "avif", "pdf"] and len(item['annotation']) < 3:
                 items_with_no_annotation.append(item)
 
         offset += 1
