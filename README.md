@@ -17,6 +17,8 @@ or if the photo has no text detected nothing will happen
 
 **Aslo note:** if the photo already has note (annotation) more than 3 charecters it will be ignored and not tag will be added to it
 
+you can keep the photo in their original folder but also add them to "OCR_Process" folder to be processed, after process is done you can just remove them from "OCR_Process" folder.
+
 # Installation:
 1. Download the code "Eagle-OCR V01-Stable.py" with "requirements.txt"
 2. Install the requirements from "requirements.txt"
