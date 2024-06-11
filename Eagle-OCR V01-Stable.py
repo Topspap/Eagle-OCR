@@ -93,7 +93,7 @@ def update_item_annotation(item_id, new_annotation=None, new_tags=None):
         }
         response = requests.post(f'{BASE_API_URL}/api/item/update', json=data)
         if response.status_code == 200:
-            print('Tags updated successfully for item', item_id)
+            print('Tags or Annotation updated successfully for item', item_id)
         else:
             print('Error updating annotation:', response.text)
     else:
